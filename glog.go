@@ -20,6 +20,8 @@
 //
 // Basic examples:
 //
+//  glog.StartLogging()
+//
 //	glog.Info("Prepare to repel boarders")
 //
 //	glog.Fatalf("Initialization failed: %s", err)
@@ -33,7 +35,8 @@
 //	glog.V(2).Infoln("Processed", nItems, "elements")
 //
 // Log output is buffered and written periodically using Flush. Programs
-// should call Flush before exiting to guarantee all log output is written.
+// should call Flush before exiting to guarantee all log output is written. In
+// order fo the automatic flushing to work, programs must call glog.StartLogging()
 //
 // By default, all log statements write to files in a temporary directory.
 // This package provides several flags that modify this behavior.
@@ -406,6 +409,9 @@ func init() {
 	logging.stderrThreshold = errorLog
 
 	logging.setVState(0, nil, false)
+}
+
+func StartLogging() {
 	go logging.flushDaemon()
 }
 
