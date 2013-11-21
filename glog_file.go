@@ -45,6 +45,12 @@ func createLogDirs() {
 		logDirs = append(logDirs, *logDir)
 	}
 	logDirs = append(logDirs, os.TempDir())
+	for _, d := range logDirs {
+		err := os.MkdirAll(d, 0700)
+		if err != nil && !os.IsExist(err) {
+			panic(err)
+		}
+	}
 }
 
 var (
